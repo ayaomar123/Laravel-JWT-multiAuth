@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -38,5 +39,17 @@ Route::group(['middleware' => ['auth:admins']], function () {
     Route::get('/admin/getAllUser', [AdminController::class, 'getAllUser']);
     Route::post('/admin/updateProfile', [AdminController::class, 'updateProfile']);
     Route::post('/admin/editPassword', [AdminController::class, 'editPassword']);
-    Route::get('/admin/me', [AdminController::class, 'me']);
+});
+
+
+
+Route::post('/company/register', [CompanyController::class, 'register']);
+
+Route::post('/company/login', [CompanyController::class, 'login']);
+
+Route::group(['middleware' => ['auth:companies']], function () {
+    Route::post('/company/logout', [CompanyController::class, 'logout']);
+    Route::get('/company/getAllUser', [CompanyController::class, 'getAllUser']);
+    Route::get('/company/getAllAdmin', [CompanyController::class, 'getAllAdmin']);
+    Route::post('/company/forgot', [CompanyController::class, 'forgot']);
 });
